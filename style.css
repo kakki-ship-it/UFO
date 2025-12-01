@@ -1,0 +1,200 @@
+:root {
+    --primary-color: #39c5bb;
+    /* Miku Green */
+    --secondary-color: #e05088;
+    /* Pink */
+    --bg-color: #ffffff;
+    /* Bright White */
+    --text-color: #333;
+}
+
+* {
+    box-sizing: border-box;
+    touch-action: none;
+    user-select: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Orbitron', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
+    background: radial-gradient(circle at center, #fff 0%, #eef 100%);
+    overflow: hidden;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 20px rgba(57, 197, 187, 0.3);
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 20;
+    pointer-events: auto;
+    transition: opacity 0.5s;
+}
+
+.screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+h1.glitch {
+    font-size: 5rem;
+    color: var(--primary-color);
+    text-shadow: 2px 2px var(--secondary-color);
+}
+
+.blink {
+    animation: blink 1s infinite;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #555;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+#controls {
+    pointer-events: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    padding-bottom: 40px;
+    width: 100%;
+    z-index: 15;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.control-btn {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.1s;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.control-btn:active {
+    background: var(--primary-color);
+    color: #fff;
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#score-display {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    z-index: 10;
+}
+
+#result-screen h2 {
+    font-size: 3rem;
+    color: var(--secondary-color);
+}
+
+.score-final {
+    font-size: 2rem;
+    margin: 20px 0;
+    color: #333;
+}
+
+#retry-btn {
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    background: white;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#retry-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Mobile adjustments */
+@media (max-width: 400px) {
+    h1.glitch {
+        font-size: 3.5rem;
+    }
+
+    .control-btn {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+}
