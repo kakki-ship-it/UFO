@@ -214,13 +214,47 @@ function calculateScore() {
     // Visually, the crane holds the tails.
     // Let's assume the "perfect" spot is when the crane is just above the girl's head.
     const targetY = girl.y - crane.height + 20;
-    const diff = Math.abs(crane.y - targetY);
+    const diffY = Math.abs(crane.y - targetY);
 
-    // Stricter scoring: 100 - diff * 2
-    // If diff is 0 (perfect), score is 100.
-    // If diff is 10px, score is 80.
-    // If diff is 50px, score is 0.
-    let rawScore = 100 - (diff * 2);
+    // Target X for crane (Center of Crane should align with Center of Girl)
+    // Girl Center
+    const girlCenterX = girl.x + girl.width / 2;
+    // Crane Center
+    const craneCenterX = crane.x + crane.width / 2;
+    const diffX = Math.abs(craneCenterX - girlCenterX);
+
+    // Scoring Logic
+    // We want a high score only if BOTH X and Y are close.
+
+    // 1. Horizontal Penalty
+    // If diffX is large, score should be very low or zero.
+    // Let's say if diffX > 50 (approx half crane width), it's a complete miss.
+    let scoreX = 0;
+    if (diffX < 50) {
+        scoreX = 100 - (diffX * 2);
+    }
+    if (scoreX < 0) scoreX = 0;
+
+    // 2. Vertical Penalty
+    // Similar logic for Y
+    let scoreY = 100 - (diffY * 2);
+    if (scoreY < 0) scoreY = 0;
+
+    // Final Score Calculation
+    // We can average them, or take the minimum, or multiply.
+    // Taking the average seems fair, but if one is 0, the result should be low.
+    // Let's use a weighted approach where X is a multiplier or simply subtract both penalties from 100.
+
+    // Approach: Start with 100, subtract penalties.
+    // Penalty X: diffX * 2
+    // Penalty Y: diffY * 2
+    let rawScore = 100 - (diffX * 2) - (diffY * 2);
+
+    // If completely missed horizontally (diffX > 60), force score to 0 to avoid "lucky" high scores on Y
+    if (diffX > 60) {
+        rawScore = 0;
+    }
+
     if (rawScore < 0) rawScore = 0;
     score = Math.floor(rawScore);
 
